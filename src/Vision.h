@@ -37,7 +37,7 @@ Vision::Vision() {
 Vision::~Vision() {}
 
 bool Vision::start() {
-  inputVideo.open(1);
+  inputVideo.open(2);
   if (inputVideo.isOpened()) {
     return true;
   } else {
@@ -64,7 +64,7 @@ bool Vision::getVisualPosition(int& _x, int& _y) {
   if (sizeIds <= 0) {
     std::cout << "Found nothing, Jon Snow" << std::endl;
     return false;
-  } else
+  } else{
     for (int i = 0; i < sizeIds; i++) {
       // std::cout << "Ids: " << ids[i] << std::endl;
       // Ids: 213
@@ -77,7 +77,7 @@ bool Vision::getVisualPosition(int& _x, int& _y) {
                    4);
 
         std::cout << ids[i] << " >> X: " << (int)_x << " Y: " << (int)_y
-                  << std::endl;
+                  <<"\n"; //std::endl;
         // image.copyTo(imageCopy);
         // cv::aruco::drawDetectedMarkers(imageCopy, corners, ids);
         // imshow("out", imageCopy);
@@ -85,6 +85,7 @@ bool Vision::getVisualPosition(int& _x, int& _y) {
         return true;
       }
     }
+  }
   return false;
 }
 void Vision::showPoints(int x[], int y[], int size, cv::Scalar color,
@@ -98,7 +99,7 @@ void Vision::showPoints(int x[], int y[], int size, cv::Scalar color,
   }
   cv::imshow("Windown", image);
   if (save) {
-    cv::String diretorioImag = cv::String("coleta1.jpg");
+    cv::String diretorioImag = cv::String("coleta1.png");
     std::cout << "Salvando...\n" << cv::imwrite(diretorioImag, image);
   }
   cv::waitKey(0);

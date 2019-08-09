@@ -20,12 +20,12 @@ int main() {
 
   arm.start("/dev/ttyUSB0");
 
-  arm.sendMove(210, 0);
+  //arm.sendMove(230, 0);
   vision.start();
 
-  std::cerr << "vision startou3";
+  std::cerr << "vision startou\n";
   // Variaveis:
-  double angle[3] = {180, 0, 0};
+  double angle[3] = {200, 0, 0};
   int type[3] = {1, 2, 2};
   double pos[3] = {0, 0, 0};
   int joint[3] = {0, 1, 2};
@@ -37,8 +37,8 @@ int main() {
   int angle_1[QTD_POINTS], angle_2[QTD_POINTS];
   int cont = 0;
 
-  std::cout << "Colecting, please wait ...." << std::endl;
-/*
+  std::cout << "Colecting, please wait ....\n" << std::endl;
+
   for (int i = 145; i >= 80; i -= 5) {
     if (crescente) {
       for (int j = 70; j <= 140; j += 5) {
@@ -62,7 +62,7 @@ int main() {
             if (vision.getVisualPosition(x, y)) {
               points_x[cont] = x;
               points_y[cont] = y;
-              angle_1[cont] = i;
+              angle_1[cont] = i; 
               angle_2[cont] = j;
               cont++;
               std::cerr << cont << " Pontos coletados\n";
@@ -96,7 +96,9 @@ int main() {
           // pos[2] << std::endl;
           angle[1] += 90;
           angle[2] += 90;
+          std::cerr<<"Mandei moveer\n";
           arm.sendMoveMulti(angle, joint, 3);
+          std::cerr<<"terminou moveer\n";
           int tentativas = 0;
           while (true) {
             if (vision.getVisualPosition(x, y)) {
@@ -121,9 +123,9 @@ int main() {
       crescente = true;
     }
   }
-*/
+
   // Finalizing
-  cv::String diretorioImag = cv::String("images/coleta1.png");
+  cv::String diretorioImag = cv::String("coleta1.png");
   std::string diretorioDado = cv::String("data/braco_modular_arco.txt");
 
   std::cout << "Quantidade de pontos coletados: " << cont << std::endl;

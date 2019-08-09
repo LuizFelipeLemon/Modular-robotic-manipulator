@@ -74,10 +74,12 @@ bool SimpleCommArduino::read(std::string &res, int size) {
     // std::cerr << "allrigth\n";
     for (int i = 0; i < tamBuffer; i++) {
       unsigned char a = bufIn[i];
+      
       if (a != 'x') {
-        // std::cerr << "Luiz: " << a << '\n';
+        std::cerr << a;
       }
     }
+    
 
     // Se houver qualquer coisa na serial ja eh o suficiente pra saber que o
     // arduino respondeu

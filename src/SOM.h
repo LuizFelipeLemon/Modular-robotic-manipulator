@@ -51,6 +51,9 @@ class SOM {
 
   void initializeNodes(int sizeNodes = 2, bool positivesValues = false,
                        double intensity = 20);
+
+  void load(std::string fileName);                    
+                       
   int updateWeight(Sample *s, int iWin, int jWin);
   void updateLabel(std::string l, int iWin, int jWin);
   void updateLabels(Sample *s);

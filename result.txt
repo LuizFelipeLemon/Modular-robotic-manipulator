@@ -1,0 +1,37 @@
+1: Angulos recuperados da SOM: 106.854 113.619 X: 5 y: 4
+#
+Terminei a Posicao 1
+Vamos começar a interpolação
+213 >> X: 307 Y: 278
+Terminei os while contador: 01: Posição após movimento com os angulos acima: 307 278
+1: Erro relativo: X: 2.33333% Y:  0.714286%
+
+2: Alvo (em pixels):  278 200
+BestDistance: 4.28139 9 10
+2: Angulos recuperados da SOM: 131.87 90.8777 X: 9 y: 10
+#
+Terminei a Posicao 1
+Vamos começar a interpolação
+213 >> X: 274 Y: 197
+Terminei os while contador: 02: Posição após movimento com os angulos acima: 274 197
+2: Erro relativo: X: 1.43885% Y:  1.5%
+
+3: Alvo (em pixels):  210 350
+BestDistance: 4.73856 13 0
+3: Angulos recuperados da SOM: 92.0268 79.9861 X: 13 y: 0
+#
+Terminei a Posicao 1
+Vamos começar a interpolação
+213 >> X: 207 Y: 354
+Terminei os while contador: 03: Posição após movimento com os angulos acima: 207 354
+3: Erro relativo: X: 1.42857% Y:  1.14286%
+
+4: Alvo (em pixels):  300 130
+BestDistance: 5.59664 4 12
+4: Angulos recuperados da SOM: 137.766 114.539 X: 4 y: 12
+#
+Terminei a Posicao 1
+Vamos começar a interpolação
+213 >> X: 299 Y: 125
+Terminei os while contador: 04: Posição após movimento com os angulos acima: 299 125
+4: Erro relativo: X: 0.333333% Y:  3.84615%

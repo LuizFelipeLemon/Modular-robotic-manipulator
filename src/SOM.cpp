@@ -390,6 +390,52 @@ void SOM::initializeNodes(int sizeNodes, bool positivesValues,
   }
 }
 
+/**
+ * Load of SOM Nodes read from a file
+ * @param fileName directory of the file
+ * containing the exported SOM
+ */
+void SOM::load(std::string fileName) {
+  std::ifstream file;
+  std::vector<double> info;
+
+  file.open(fileName.c_str());
+  if (!file.good()) {
+    std::cout << " File, " << fileName << ", not found! " << std::endl;
+    return;
+  }
+  file.ignore(numeric_limits<streamsize>::max(),
+              '\n');  // Retira a primeira linha
+  int i, j;
+  float beta, gamma, rx, ry;
+  while (file.good()) {
+    info.clear();
+    file >> i;
+    file.ignore(numeric_limits<streamsize>::max(), ',');
+    file >> j;
+    file.ignore(numeric_limits<streamsize>::max(), ',');
+    file >> beta;
+    info.push_back(beta);
+    file.ignore(numeric_limits<streamsize>::max(), ',');
+    file >> gamma;
+    info.push_back(gamma);
+    file.ignore(numeric_limits<streamsize>::max(), ',');
+    file >> rx;
+    info.push_back(rx);
+    file.ignore(numeric_limits<streamsize>::max(), ',');
+    file >> ry;
+    info.push_back(ry);
+
+    // std::cerr<<i <<" , " << j <<" , "<<beta <<" , " << gamma <<" , "<<rx <<"
+    // , " << ry<<'\n';
+    file.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    nodes[i][j].setDescription(Utils::int2string(i) + "-" +
+                               Utils::int2string(j));
+    nodes[i][j].setFeatures(info);
+  }
+}
+
 void SOM::enableNodes() {
   for (int i = 0; i < sizeNetwork; i++) {
     for (int j = 0; j < sizeNetwork; j++) {
