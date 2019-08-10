@@ -52,8 +52,8 @@ class SOM {
   void initializeNodes(int sizeNodes = 2, bool positivesValues = false,
                        double intensity = 20);
 
-  void load(std::string fileName);                    
-                       
+  void load(std::string fileName);
+
   int updateWeight(Sample *s, int iWin, int jWin);
   void updateLabel(std::string l, int iWin, int jWin);
   void updateLabels(Sample *s);
@@ -70,7 +70,14 @@ class SOM {
   void bestResponse(double features[], std::vector<double> &responseFeatures,
                     int inputMinIndex = 0, int inputMaxIndex = -1);
 
-  // \\Alterações de Luiz
+  // Alterações de Luiz
+
+  void bestDistance(double features[], int &index_best_l, int &index_best_c,
+                    int inputMinIndex = 0, int inputMaxIndex = -1);
+  double parcialDistance(double features[], int i, int j, int inputMinIndex = 0,
+                         int inputMaxIndex = -1);
+
+  // \\ Alterações de Luiz
 
  private:
   int validatePos(int pos);
@@ -92,15 +99,6 @@ class SOM {
   int maxEpoch;
 
   bool debug;
-
-  // Alterações de Luiz
-
-  void bestDistance(double features[], int &index_best_l, int &index_best_c,
-                    int inputMinIndex = 0, int inputMaxIndex = -1);
-  double parcialDistance(double features[], int i, int j, int inputMinIndex = 0,
-                         int inputMaxIndex = -1);
-
-  // \\ Alterações de Luiz
 };
 
 #endif /* SOM_H */

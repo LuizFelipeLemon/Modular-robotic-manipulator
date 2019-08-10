@@ -10,6 +10,9 @@ SOM: src/SOM.h src/SOM.cpp
 PSOM: src/PSOM.h src/PSOM.cpp 
 	g++ -c src/PSOM.cpp -o build/PSOM.o
 
+I_SOM: src/I-SOM.h src/I-SOM.cpp 
+	g++ -c src/I-SOM.cpp -o build/I-SOM.o
+
 Test: src/Test.h src/Test.cpp 
 	g++ -c src/Test.cpp -o build/Test.o
 
@@ -23,26 +26,26 @@ output: build/Node.o build/Sample.o build/SOM.o build/Test.o build/DataSet.o bui
 	g++ build/Node.o build/Sample.o build/SOM.o build/Test.o build/DataSet.o build/PSOM.o build/main.o -o exec
 
 all:
-	make Node Sample SOM PSOM Test DataSet main output
+	make Node Sample SOM PSOM I_SOM Test DataSet main output
 
 collect: src/som_collect.cpp
-	make Node Sample SOM PSOM Test DataSet
+	make Node Sample SOM PSOM Test DataSet I_SOM
 	g++ -Wall -Wunused -std=c++11 -O2 `pkg-config --cflags opencv` src/som_collect.cpp -o som_collect `pkg-config --libs opencv`
 
 execute: src/som_execute.cpp
-	make Node Sample SOM PSOM Test DataSet
-	g++ -Wall -Wunused -std=c++11 -O2 `pkg-config --cflags opencv` build/Node.o build/Sample.o build/SOM.o build/Test.o build/DataSet.o build/PSOM.o src/som_execute.cpp -o som_execute `pkg-config --libs opencv`
+	make Node Sample SOM PSOM Test DataSet I_SOM
+	g++ -Wall -Wunused -std=c++11 -O2 `pkg-config --cflags opencv` build/Node.o build/I-SOM.o build/Sample.o build/SOM.o build/Test.o build/DataSet.o build/PSOM.o src/som_execute.cpp -o som_execute `pkg-config --libs opencv`
 
 draw:
-	make Node Sample SOM PSOM Test DataSet
+	make Node Sample SOM PSOM Test DataSet I_SOM
 	g++ -Wall -Wunused -std=c++11 -O2 `pkg-config --cflags opencv` build/Node.o build/Sample.o build/SOM.o build/Test.o build/DataSet.o build/PSOM.o src/draw_map.cpp -o draw_map `pkg-config --libs opencv`
 
 click: src/execute_on_click.cpp
-	make Node Sample SOM PSOM Test DataSet
+	make Node Sample SOM PSOM Test DataSet I_SOM
 	g++ -Wall -Wunused -std=c++11 -O2 `pkg-config --cflags opencv` build/Node.o build/Sample.o build/SOM.o build/Test.o build/DataSet.o build/PSOM.o src/execute_on_click.cpp -o execute_on_click `pkg-config --libs opencv`
 
 train: src/train.cpp
-	make Node Sample SOM PSOM Test DataSet
+	make Node Sample SOM PSOM Test DataSet I_SOM
 	g++ -Wall -Wunused -std=c++11 -O2 `pkg-config --cflags opencv` build/Node.o build/Sample.o build/SOM.o build/Test.o build/DataSet.o build/PSOM.o src/train.cpp -o train `pkg-config --libs opencv`
 
 

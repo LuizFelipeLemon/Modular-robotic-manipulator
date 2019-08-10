@@ -2,8 +2,8 @@
 #include <cmath>
 #include <iostream>
 #include <vector>
+#include "I-SOM.h"
 #include "ModularArm.h"
-#include "PSOM.h"
 #include "SOMBracoModular.h"
 #include "Vision.h"
 
@@ -23,7 +23,7 @@ int main() {
 
   std::cout << "Criando a PSOM...\n";
 
-  PSOM som(15);
+  I_SOM som(15);
   std::cout << "Lendo a PSOM...\n";
   std::string input_file = "data/braco_modular_arco_182.txt";
   std::string output_file = "output/braco_modular_arco_15_10000.csv";
@@ -41,7 +41,7 @@ int main() {
   double input[4];
   input[0] = 0;
   input[1] = 0;
-  std::vector<double> output;
+  std::vector<Tuple> output;
   int x[qtdTestes], y[qtdTestes];
   for (int i = 0; i < qtdTestes; i++) {
     input[2] = (double)alvo[i][0];
@@ -53,8 +53,11 @@ int main() {
     // vision.getFrameSize(xMax, yMax);
     // som.normalize(input, xMax, yMax);
     // normalize(input, norma);
-
-    som.bestResponse(input, output, 2, 3);
+    som.interpolate(input, output);
+    // som.best6(input, 2, 3, output);
+    // som.populateM(output);
+    cout << "FIM\n";
+    /*
     std::cout << i + 1 << ": Angulos recuperados da SOM: " << output[0] << " "
               << output[1] << " X: " << output[2] << " y: " << output[3]
               << std::endl;
@@ -68,14 +71,14 @@ int main() {
     std::cerr << "Vamos começar a interpolação\n";
     std::vector<double> outputInterpolado;
 
-    som.luizInterpolation(input[2], input[3], outputInterpolado);
+    // som.luizInterpolation(input[2], input[3], outputInterpolado);
     std::cout << i + 1 << ": Alvo (em pixels):  " << input[2] << " " << input[3]
               << std::endl;
     std::cout << i + 1 << ": Angulos recuperados da SOM: " << output[0] << " "
               << output[1] << " X: " << output[2] << " y: " << output[3]
               << std::endl;
     int contador = 0;
-    /*
+
     bool keep = true;
     do {
       keep = vision.getVisualPosition(x[i], y[i]);
