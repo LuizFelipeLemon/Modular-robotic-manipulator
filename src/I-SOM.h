@@ -31,7 +31,7 @@ class I_SOM : public SOM {
   void invert();
   void populateM(std::vector<Tuple> output);
   void coef(double x, double y, double coef[]);
-  double interpolate(double features[], std::vector<Tuple>& final);
+  double interpolate(double features[], std::vector<double>& final);
   double z(double x, double y, Matrix<double>& a);
 
  private:

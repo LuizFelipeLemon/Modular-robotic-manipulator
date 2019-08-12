@@ -483,6 +483,7 @@ double SOM::parcialDistance(double features[], int i, int j, int inputMinIndex,
   }
   std::vector<double> networkFeatures;
   getNodeFeatures(i, j, networkFeatures);
+  
 
   for (int f = inputMinIndex; f <= inputMaxIndex; f++) {
     soma += pow(features[f] - networkFeatures[f], 2);

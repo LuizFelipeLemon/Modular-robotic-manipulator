@@ -19,6 +19,7 @@ void I_SOM::best6(double features[], int inputMinIndex, int inputMaxIndex,
   for (int i = 0; i < getSizeNetwork(); i++) {
     for (int j = 0; j < getSizeNetwork(); j++) {
       float d = parcialDistance(features, i, j, inputMinIndex, inputMaxIndex);
+      // cout << "D: " << d << " I: " << i << " J: " << j << '\n';
       dist.push_back(Tuple{d, i, j});
     }
   }
@@ -27,10 +28,10 @@ void I_SOM::best6(double features[], int inputMinIndex, int inputMaxIndex,
 
   for (int i = 0; i < 6; i++) {
     final.push_back(dist[i]);
-  }
-  for (int i = 0; i < final.size(); i++) {
-    cout << final[i].dist << "  " << final[i].i << " " << final[i].j << '\n';
-  }
+  } /*
+ for (int i = 0; i < final.size(); i++) {
+   cout << final[i].dist << "  " << final[i].i << " " << final[i].j << '\n';
+ }  */
 }
 
 void I_SOM::coef(double x, double y, double coef[]) {
@@ -48,21 +49,22 @@ void I_SOM::populateM(std::vector<Tuple> output) {
   for (int lin = 0; lin < output.size(); lin++) {
     std::vector<double> w;
     getNodeFeatures(output[lin].i, output[lin].j, w);
-    cout << "X: " << w[0] << "  Y: " << w[1] << "  "
-         << "teta1: " << w[2] << "  teta2: " << w[3] << "  " << lin << "\n";
+    // cout << "lin: " << output[lin].i << " " << output[lin].j << '\n';
+    // cout << w[2] << " , " << w[3] << " , " << w[0] << " , " << w[1] << ";\n";
     double alfas[6];
     // cerr << "put1 \n";
-    b1.put(lin, 0, w[2]);
+    b1.put(lin, 0, w[0]);
     // cerr << "put2\n";
-    b2.put(lin, 0, w[3]);
+    b2.put(lin, 0, w[1]);
     // cerr << "put2\n";
-    coef(w[0], w[1], alfas);  //    calcula os coeficientes da função do
+    coef(w[2], w[3], alfas);  //    calcula os coeficientes da função do
                               //    paraboloide para o ponto w[0],w[1]
 
     for (int col = 0; col < 6; col++) {
       A.put(lin, col, alfas[col]);
     };
   }
+  /*
   for (int i = 0; i < 6; i++) {
     for (int j = 0; j < 6; j++) {
       cout << A.get(i, j) << " , ";
@@ -70,18 +72,19 @@ void I_SOM::populateM(std::vector<Tuple> output) {
     cout << " * " << b1.get(i, 0) << " * " << b2.get(i, 0);
 
     cout << ";\n";
-  }
+  }*/
 }
 
 void I_SOM::invert() {
   cout << "\n\n";
   A.invert();
+  /*
   for (int i = 0; i < 6; i++) {
     for (int j = 0; j < 6; j++) {
       cout << A.get(i, j) << " , ";
     }
     cout << '\n';
-  }
+  }*/
 }
 
 double I_SOM::z(double x, double y, Matrix<double> &a) {
@@ -91,23 +94,31 @@ double I_SOM::z(double x, double y, Matrix<double> &a) {
   return z;
 }
 
-double I_SOM::interpolate(double features[], std::vector<Tuple> &final) {
+double I_SOM::interpolate(double features[], std::vector<double> &final) {
   std::vector<Tuple> output;
+  output.clear();
   best6(features, 2, 3, output);  // Pega os 6 pontos mais próximos
-  populateM(output);              // Popula a matrix M de coeficientes
+
+  populateM(output);  // Popula a matrix M de coeficientes
+
   invert();
-  a1 = A * (b1 * -1);
-  a2 = A * (b2 * -1);
+  a1 = A * (b1);
+  a2 = A * (b2);
+  /*
   cout << "COEFICIENTS:\n";
   for (int i = 0; i < 6; i++)
     cout << a1.get(i, 0) << " | " << a2.get(i, 0) << '\n';
 
   cout << "Vamos calcular para o ponto : (" << features[2] << " , "
        << features[3] << ")\n";
+       */
   double teta1 = z(features[2], features[3], a1);
   double teta2 = z(features[2], features[3], a2);
 
-  cout << "Teta1: " << teta1 << " Teta2: " << teta2 << '\n';
+  // cout << "Teta1: " << teta1 << " Teta2: " << teta2 << '\n';
+  final.clear();
+  final.push_back(teta1);
+  final.push_back(teta2);
 
   /*
 

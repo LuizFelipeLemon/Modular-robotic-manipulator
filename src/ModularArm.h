@@ -51,9 +51,8 @@ ModularArm::~ModularArm() {}
 
 int ModularArm::start(std::string _port = "/dev/ttyUSB0") {
   int ret = arduino.open(_port);
-  std::cerr << "Conectou com o Arduino: "<<ret<<'\n';
+  std::cerr << "Conectou com o Arduino: " << ret << '\n';
   sendHome();
-   
 
   return ret;
 }
@@ -121,7 +120,7 @@ void ModularArm::sendMoveMultiNoWait(double _value[], int _joint[], int size) {
   }
 
   msg += ";";
-  
+
   arduino.write(msg);
 }
 
@@ -139,11 +138,11 @@ void ModularArm::sendMoveMulti(double _value[], int _joint[], int size) {
   }
 
   msg += ";";
-  //std::cerr<<"Msg:"<<msg<<'\n';
+  // std::cerr << "Msg:" << msg << '\n';
   arduino.write(msg);
-  while (!arduino.read(discart, 2))
-    // std::cerr<<"Wainting\n";
+  while (!arduino.read(discart, 2))  // std::cerr << "Wainting\n";
     ;
+  std::cerr << "Sai movemulti\n";
 }
 
 void ModularArm::sendHome() {

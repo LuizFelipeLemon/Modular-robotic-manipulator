@@ -20,7 +20,7 @@ int main() {
 
   arm.start("/dev/ttyUSB0");
 
-  //arm.sendMove(230, 0);
+  // arm.sendMove(230, 0);
   vision.start();
 
   std::cerr << "vision startou\n";
@@ -62,7 +62,7 @@ int main() {
             if (vision.getVisualPosition(x, y)) {
               points_x[cont] = x;
               points_y[cont] = y;
-              angle_1[cont] = i; 
+              angle_1[cont] = i;
               angle_2[cont] = j;
               cont++;
               std::cerr << cont << " Pontos coletados\n";
@@ -96,9 +96,9 @@ int main() {
           // pos[2] << std::endl;
           angle[1] += 90;
           angle[2] += 90;
-          std::cerr<<"Mandei moveer\n";
+          std::cerr << "Mandei moveer\n";
           arm.sendMoveMulti(angle, joint, 3);
-          std::cerr<<"terminou moveer\n";
+          std::cerr << "terminou moveer\n";
           int tentativas = 0;
           while (true) {
             if (vision.getVisualPosition(x, y)) {
@@ -125,8 +125,8 @@ int main() {
   }
 
   // Finalizing
-  cv::String diretorioImag = cv::String("coleta1.png");
-  std::string diretorioDado = cv::String("data/braco_modular_arco.txt");
+  cv::String diretorioImag = cv::String("coleta_12_08.png");
+  std::string diretorioDado = cv::String("data/braco_modular_arco_12_08.txt");
 
   std::cout << "Quantidade de pontos coletados: " << cont << std::endl;
 
