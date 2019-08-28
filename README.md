@@ -1,48 +1,47 @@
-# :rainbow: Modular-robotic-manipulator :octocat:
+# Modular-robotic-manipulator
+
+For accurate execution of any robotic system proper sensing and control is expected. However, kinematic modeling can become a very laborious step when performed analytically. Approaches using neural networks seek to simplify this process but in return require relatively high amount of training data. The following work explores neural networks that can more efficiently deliver adequate results at lower computational costs.
+
+This work is highly based on [this](https://github.com/WKossmann/ModularRoboticManipulator-MRM) developed by Willian Kossmann da Silva.
 
 
-## Calculando a aceleração no sentido do movimento
+## Installing the requisites
+* OpenCV 3.4.x [Installation Guide](https://docs.opencv.org/master/d7/d9f/tutorial_linux_install.html)
+* ArUco 3.0.10 [Installation Guide](http://maztories.blogspot.com/2013/07/installing-aruco-augmented-reality.html)
 
- ![2](https://latex.codecogs.com/gif.latex?A%20%3D%20-k*g*sin%28%5CTheta%20%29)
+This project was initially executed on a Linux environment with the distribution Ubuntu 18.04. The OpenCV version was 3.4.1 and the ArUco version was 3.0.10. The machine had an Intel Core i5 7th generation and 4GB of RAM Memory.
 
-Calcularemos as componentes da aceleração Ax e Ay criando um vetor de coordenadas e aproximando a um polinômio de grau 2. [Código da aproximação MMQ](https://github.com/LuizFelipeLemon/CN/blob/master/MMQ%2BEDO/MMQ/mmq.sci)
 
-![E1](https://latex.codecogs.com/gif.latex?x%20%3D%20a_%7B0%7D%20&plus;%20a_%7B1%7Dt%20&plus;%20%5Cfrac%7Ba_%7B2%7D%7D%7B2%7D%20t)
-```
-t = [0.434 0.567 0.7 0.833 0.966 1.1 1.233 1.357 1.5 1.636 1.767 1.9];
-x = [116 125 144 173 210 257 313 378 449 525 611 701]; 
-plot(t,x,'o');
-a = mmq(t,x,2);
-```
->a  = [124.66413  -128.75248  228.43345]
+## Proposed Method
 
-**2*Ax = 228.43345** 
+The first step is to capture the points that will be the input of neural network training. About 170 basis points are captured as shown in the image below.
 
-**Ax = 114.21672**
-```
-plot(p , a(1) + a(2).*p + a(3).*(p.^2),'r')
-```
+![Captured points](https://github.com/LuizFelipeLemon/Modular-robotic-manipulator/data/coleta1_181.png)
 
-![Aproximação por MMQ](https://github.com/LuizFelipeLemon/CN/blob/master/MMQ%2BEDO/MMQ/x(t).png)
-
-![E1](https://latex.codecogs.com/gif.latex?y%20%3D%20a_%7B0%7D%20&plus;%20a_%7B1%7Dt%20&plus;%20%5Cfrac%7Ba_%7B2%7D%7D%7B2%7D%20t)
-```
-t = [0.434 0.567 0.7 0.833 0.966 1.1 1.233 1.357 1.5 1.636 1.767 1.9];
-y = [300 298 296 295 292 288 284 281 278 276 274 269]; 
-plot(t,y,'o');
-a = mmq(t,y,2);
-```
->a  = [307.70819  -14.871749  -2.8316649]
-
-**2*Ay = -2.8316649**
-
-**Ay = -1.4158324**
+In order to execute this step run:
 
 ```
-plot(p,a(1) + a(2).*p + a(3).*(p.^2),'r')
+make collect
+./som_collect
 ```
-![Aproximação por MMQ](https://github.com/LuizFelipeLemon/CN/blob/master/MMQ%2BEDO/MMQ/y(t).png)
+Next it is necessary to train the model with the desired topology. To ajust parameters of the Network fell free to edit [here](https://github.com/LuizFelipeLemon/Modular-robotic-manipulator/codes/src/train.cpp), might be appropriate to change the input filename also. In order to execute this step run:
 
-![EQ](https://latex.codecogs.com/gif.latex?A%20%3D%20%5Csqrt%7BA_%7Bx%7D%20&plus;%20A_%7By%7D%7D)
+```
+make train
+./train
+```
 
-**A = 114.2255**
+Below we can see the result of the trained algorithm. The SOM Map printed on the image on green. The red and blue points are not important right now.
+
+
+![Map of a 15x15 SOM](https://github.com/LuizFelipeLemon/Modular-robotic-manipulator/data/coleta2_15x15.png)
+
+
+Lastly we validate the training with the excecution code. This will run through some arbitrary points in order to validate, error evaluation are printed on screen. To execute this step run:
+
+```
+make execute
+./som_execute
+```
+Below we can see the result of the excecution of the movement. The SOM Map printed on the image on green. The red and blue points are now important! In red we can see the target points, in blue are the resulting points from the execution of the movement.
+![Map of a 15x15 SOM](https://github.com/LuizFelipeLemon/Modular-robotic-manipulator/data/coleta2_15x15.png)
