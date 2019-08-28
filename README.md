@@ -16,7 +16,7 @@ This project was initially executed on a Linux environment with the distribution
 
 The first step is to capture the points that will be the input of neural network training. About 170 basis points are captured as shown in the image below.
 
-![Captured points](https://github.com/LuizFelipeLemon/Modular-robotic-manipulator/data/coleta1_181.png)
+![Captured points](https://github.com/LuizFelipeLemon/Modular-robotic-manipulator/blob/master/data/coleta1_181.png)
 
 In order to execute this step run:
 
@@ -34,7 +34,7 @@ make train
 Below we can see the result of the trained algorithm. The SOM Map printed on the image on green. The red and blue points are not important right now.
 
 
-![Map of a 15x15 SOM](https://github.com/LuizFelipeLemon/Modular-robotic-manipulator/data/coleta2_15x15.png)
+![Map of a 15x15 SOM](https://github.com/LuizFelipeLemon/Modular-robotic-manipulator/blob/master/data/coleta2_15x15.png)
 
 
 Lastly we validate the training with the excecution code. This will run through some arbitrary points in order to validate, error evaluation are printed on screen. To execute this step run:
@@ -44,4 +44,4 @@ make execute
 ./som_execute
 ```
 Below we can see the result of the excecution of the movement. The SOM Map printed on the image on green. The red and blue points are now important! In red we can see the target points, in blue are the resulting points from the execution of the movement.
-![Map of a 15x15 SOM](https://github.com/LuizFelipeLemon/Modular-robotic-manipulator/data/coleta2_15x15.png)
+![Map of a 15x15 SOM](https://github.com/LuizFelipeLemon/Modular-robotic-manipulator/blob/master/data/coleta2_15x15.png)
