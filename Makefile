@@ -45,6 +45,9 @@ train: codes/src/train.cpp
 	make Node Sample SOM PSOM Test DataSet
 	g++ -Wall -Wunused -std=c++11 -O2 `pkg-config --cflags opencv` codes/build/Node.o codes/build/Sample.o codes/build/SOM.o codes/build/Test.o codes/build/DataSet.o codes/build/PSOM.o codes/src/train.cpp -o train `pkg-config --libs opencv`
 
+color: codes/src/color_sensor.cpp
+	make Node Sample SOM PSOM Test DataSet
+	g++ -Wall -Wunused -std=c++11 -O2 `pkg-config --cflags opencv` codes/build/Node.o codes/build/Sample.o codes/build/SOM.o codes/build/Test.o codes/build/DataSet.o codes/build/PSOM.o codes/src/color_sensor.cpp -o color `pkg-config --libs opencv`
 
 
 clean:

@@ -44,4 +44,5 @@ make execute
 ./som_execute
 ```
 Below we can see the result of the excecution of the movement. The SOM Map printed on the image on green. The red and blue points are now important! In red we can see the target points, in blue are the resulting points from the execution of the movement.
+
 ![Map of a 15x15 SOM](https://github.com/LuizFelipeLemon/Modular-robotic-manipulator/blob/master/data/coleta2_15x15.png)
