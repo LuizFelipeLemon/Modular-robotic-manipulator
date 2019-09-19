@@ -1,85 +1,75 @@
-/* 
+/*
  * File:   DataSet.cpp
  * Author: oriva
- * 
+ *
  * Created on 10 de Outubro de 2014, 15:32
  */
 
 #include "DataSet.h"
 
- int DataSet::srandInc = 0; 
+int DataSet::srandInc = 0;
 
 DataSet::DataSet() {
     sampleI = 0;
     sampleSize = 0;
     dataSetSize = 0;
-
 }
 
-DataSet::DataSet(std::string fn){
-    sampleI = 0; 
-    loadDataFromFile(fn); 
+DataSet::DataSet(std::string fn) {
+    sampleI = 0;
+    loadDataFromFile(fn);
 }
 
-DataSet::DataSet(const DataSet& orig) {
-    
-}
+DataSet::DataSet(const DataSet& orig) {}
 
 void DataSet::generateRandomIndex() {
-    
-    //std::cout << endl << "----------------" << DataSet::srandInc <<"----------" << endl << time(NULL) + DataSet::srandInc << endl; 
-    srand(unsigned ( time(NULL) + DataSet::srandInc ));
+    // std::cout << endl << "----------------" << DataSet::srandInc
+    // <<"----------" << endl << time(NULL) + DataSet::srandInc << endl;
+    srand(unsigned(time(NULL) + DataSet::srandInc));
     index.clear();
     unsigned int tss = index.size();
-    for (unsigned int i = 0; i < matrix.size(); i++)
-        index.push_back(i);
+    for (unsigned int i = 0; i < matrix.size(); i++) index.push_back(i);
     randomizeIndex();
-
 }
 
 /**
- * Obtem um amostra aleatória 
+ * Obtem um amostra aleatória
  * @param s uma amostra
  * @return verdadeiro se a amostra é a primeira, falso para as outras
  */
- bool DataSet::getRandomSample(Sample* &s) {
+bool DataSet::getRandomSample(Sample*& s) {
     s = getRandomSample();
-    if (sampleI == 0)
-        return true; 
-    return false; 
+    if (sampleI == 0) return true;
+    return false;
 }
 
 Sample* DataSet::getRandomSample() {
     sampleI++;
-    if (((uint) sampleI) >= matrix.size())
-        sampleI = 0;
+    if (((uint)sampleI) >= matrix.size()) sampleI = 0;
     return (matrix[index[sampleI]]);
 }
 
 Sample* DataSet::getSample(unsigned int i) {
-    if (i >= matrix.size())
-        i = 0;
+    if (i >= matrix.size()) i = 0;
     return matrix[i];
 }
 
-int DataSet::getSize(){
-    matrix.size(); 
-}
+int DataSet::getSize() { matrix.size(); }
 
-bool DataSet::isEmpty(){
-    return empty; 
-}
+bool DataSet::isEmpty() { return empty; }
 
-//TODO: adicionar uma excessão na leitura de arquivo 
+// TODO: adicionar uma excessão na leitura de arquivo
 void DataSet::loadDataFromFile(std::string fileName) {
-    matrix.clear(); 
+    matrix.clear();
     std::ifstream file;
     std::vector<double> lineMatrix;
+
     file.open(fileName.c_str());
     if (!file.good()) {
         std::cout << " File, " << fileName << ", not found! " << std::endl;
         return;
     }
+
     float columns, lines, data;
     file >> lines >> columns;
     for (int i = 0; i < lines; i++) {
@@ -88,24 +78,24 @@ void DataSet::loadDataFromFile(std::string fileName) {
                 file >> data;
                 lineMatrix.push_back(data);
             }
-           // Sample s(lineMatrix);
+            // Sample s(lineMatrix);
 
             matrix.push_back(new Sample(lineMatrix));
-            lineMatrix.clear(); 
+            lineMatrix.clear();
         }
     }
     empty = false;
     sampleSize = columns;
-    //matrix.pop_back();
+    // matrix.pop_back();
     dataSetSize = matrix.size();
-    //originalDatabaseSize = matrix.size();
-    generateRandomIndex(); 
+    // originalDatabaseSize = matrix.size();
+    generateRandomIndex();
 }
 
 void DataSet::loadDataFromClassesFile(std::string fileName) {
-    matrix.clear(); 
+    matrix.clear();
     std::ifstream file;
-    std::string label; 
+    std::string label;
     std::vector<double> lineMatrix;
     file.open(fileName.c_str());
     if (!file.good()) {
@@ -116,22 +106,22 @@ void DataSet::loadDataFromClassesFile(std::string fileName) {
     file >> lines >> columns;
     for (int i = 0; i < lines; i++) {
         if (file.good()) {
-            for (int j = 0; j < columns-1; j++) {
+            for (int j = 0; j < columns - 1; j++) {
                 file >> data;
                 lineMatrix.push_back(data);
             }
             // Sample s(lineMatrix);
-            file >> label; 
+            file >> label;
             matrix.push_back(new Sample(lineMatrix, label));
-            lineMatrix.clear();     
+            lineMatrix.clear();
         }
     }
     empty = false;
     sampleSize = columns;
-    //matrix.pop_back();
+    // matrix.pop_back();
     dataSetSize = matrix.size();
-    //originalDatabaseSize = matrix.size();
-    generateRandomIndex(); 
+    // originalDatabaseSize = matrix.size();
+    generateRandomIndex();
 }
 
 void DataSet::normalizeData() {
@@ -160,7 +150,7 @@ void DataSet::normalizeData() {
         std::cout << minValues.at(j) << " ";
     }
     std::cout << std::endl;
-    std::cout  << " - - - max: ";
+    std::cout << " - - - max: ";
     for (int j = 0; j < sampleSize; j++) {
         std::cout << maxValues.at(j) << " ";
     }
@@ -168,17 +158,17 @@ void DataSet::normalizeData() {
     for (uint i = 0; i < matrix.size(); i++) {
         s = matrix.at(i);
         s->getFeatures(lineMatrix);
-        // normaliza 
+        // normaliza
         for (int j = 0; j < sampleSize; j++) {
-            double newValue = (lineMatrix.at(j) - minValues[j]) / (maxValues[j] - minValues[j]);
+            double newValue = (lineMatrix.at(j) - minValues[j]) /
+                              (maxValues[j] - minValues[j]);
             lineMatrix.at(j) = newValue;
-            s->setFeatures(lineMatrix); 
+            s->setFeatures(lineMatrix);
         }
     }
 }
 
 void DataSet::putNoise(float sigma, unsigned int repetitions) {
-
     std::vector<Sample*> matrixTemp;
     uint amountOriginalData = matrix.size();
     for (uint i = 0; i < repetitions * matrix.size(); i++) {
@@ -186,7 +176,7 @@ void DataSet::putNoise(float sigma, unsigned int repetitions) {
         Sample* originalSample = matrix.at(pos);
         std::vector<double> info;
         originalSample->getFeatures(info);
-        Sample* noiseSample= new Sample(info);
+        Sample* noiseSample = new Sample(info);
         noiseSample->putNormalNoise(sigma);
         matrixTemp.push_back(noiseSample);
     }
@@ -198,13 +188,10 @@ void DataSet::randomizeIndex() {
     std::random_shuffle(index.begin(), index.end());
 }
 
-
-
 void DataSet::saveToFile(std::string fileName, bool randomize, bool normalize) {
     std::vector<double> lineMatrix;
     Sample* s;
-    if (empty)
-        return;
+    if (empty) return;
     std::ofstream file(fileName.c_str());
     if (normalize) {
         normalizeData();
@@ -228,14 +215,11 @@ void DataSet::saveToFile(std::string fileName, bool randomize, bool normalize) {
     file.close();
 }
 
-
-
 void DataSet::saveToFileOctaveFormat(std::string fileName, unsigned int rows) {
     std::vector<double> lineMatrix;
     Sample* s;
     std::ofstream file(fileName.c_str());
-    if (rows == 0)
-        rows = matrix.size();
+    if (rows == 0) rows = matrix.size();
 
     file << "# name: data " << std::endl;
     file << "# type: matrix " << std::endl;
@@ -244,15 +228,13 @@ void DataSet::saveToFileOctaveFormat(std::string fileName, unsigned int rows) {
     uint i = 0;
     uint r = 0;
     while (r < rows) {
-
-        if (i == matrix.size())
-            i = 0;
+        if (i == matrix.size()) i = 0;
         s = getSample(i);
         std::cout << s->toString() << std::endl;
         s->getFeatures(lineMatrix);
         //     file << (i % originalDatabaseSize ) + 1 << " " ;
         for (int j = 0; j < sampleSize; j++) {
-            file <<  lineMatrix[j] << " ";
+            file << lineMatrix[j] << " ";
         }
         file << std::endl;
         i++;
@@ -261,20 +243,16 @@ void DataSet::saveToFileOctaveFormat(std::string fileName, unsigned int rows) {
     file.close();
 }
 
-
 void DataSet::show() {
-    if (empty)
-        return;
+    if (empty) return;
     // leitura da estrutura de dados que contem o arquivo
-    Sample s(0); 
+    Sample s(0);
     std::cout << " Size of matrix:" << matrix.size() << std::endl;
     for (uint i = 0; i < matrix.size(); i++) {
-        std::cout << "Sample "<< i << ": ";
-        std::cout <<  matrix.at(i)->toString() << std::endl; 
+        std::cout << "Sample " << i << ": ";
+        std::cout << matrix.at(i)->toString() << std::endl;
     }
     std::cout << std::endl;
 }
 
-DataSet::~DataSet() {
-}
-
+DataSet::~DataSet() {}
