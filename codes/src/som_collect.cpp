@@ -3,7 +3,7 @@
 #include <fstream>
 #include <iostream>
 #include "ModularArm.h"
-#include "Vision.h"
+//#include "Vision.h"
 
 #define QTD_POINTS 10000
 
@@ -16,12 +16,12 @@ void normalize(double vector[4], double& norma) {
 
 int main() {
   ModularArm arm;
-  Vision vision;
+  // Vision vision;
 
   arm.start("/dev/ttyUSB0");
 
-  //arm.sendMove(230, 0);
-  vision.start();
+  // arm.sendMove(230, 0);
+  // vision.start();
 
   std::cerr << "vision startou\n";
   // Variaveis:
@@ -62,7 +62,7 @@ int main() {
             if (vision.getVisualPosition(x, y)) {
               points_x[cont] = x;
               points_y[cont] = y;
-              angle_1[cont] = i; 
+              angle_1[cont] = i;
               angle_2[cont] = j;
               cont++;
               std::cerr << cont << " Pontos coletados\n";
@@ -96,9 +96,9 @@ int main() {
           // pos[2] << std::endl;
           angle[1] += 90;
           angle[2] += 90;
-          std::cerr<<"Mandei moveer\n";
+          std::cerr << "Mandei moveer\n";
           arm.sendMoveMulti(angle, joint, 3);
-          std::cerr<<"terminou moveer\n";
+          std::cerr << "terminou moveer\n";
           int tentativas = 0;
           while (true) {
             if (vision.getVisualPosition(x, y)) {
