@@ -28,31 +28,6 @@ output: codes/build/Node.o codes/build/Sample.o codes/build/SOM.o codes/build/Te
 all:
 	make Node Sample SOM PSOM I_SOM Test DataSet main output
 
-<<<<<<< HEAD
-collect: src/som_collect.cpp
-	make Node Sample SOM PSOM Test DataSet I_SOM
-	g++ -Wall -Wunused -std=c++11 -O2 `pkg-config --cflags opencv` src/som_collect.cpp -o som_collect `pkg-config --libs opencv`
-
-execute: src/som_execute.cpp
-	make Node Sample SOM PSOM Test DataSet I_SOM
-	g++ -Wall -Wunused -std=c++11 -O2 `pkg-config --cflags opencv` build/Node.o build/I-SOM.o build/Sample.o build/SOM.o build/Test.o build/DataSet.o build/PSOM.o src/som_execute.cpp -o som_execute `pkg-config --libs opencv`
-
-draw:
-	make Node Sample SOM PSOM Test DataSet I_SOM
-	g++ -Wall -Wunused -std=c++11 -O2 `pkg-config --cflags opencv` build/Node.o build/I-SOM.o build/Sample.o build/SOM.o build/Test.o build/DataSet.o build/PSOM.o src/draw_map.cpp -o draw_map `pkg-config --libs opencv`
-
-click: src/execute_on_click.cpp
-	make Node Sample SOM PSOM Test DataSet I_SOM
-	g++ -Wall -Wunused -std=c++11 -O2 `pkg-config --cflags opencv` build/Node.o build/I-SOM.o build/Sample.o build/SOM.o build/Test.o build/DataSet.o build/PSOM.o src/execute_on_click.cpp -o execute_on_click `pkg-config --libs opencv`
-
-train: src/train.cpp
-	make Node Sample SOM PSOM Test DataSet I_SOM
-	g++ -Wall -Wunused -std=c++11 -O2 `pkg-config --cflags opencv` build/Node.o build/I-SOM.o build/Sample.o build/SOM.o build/Test.o build/DataSet.o build/PSOM.o src/train.cpp -o train `pkg-config --libs opencv`
-
-click2: src/click.cpp
-	make Node Sample SOM PSOM Test DataSet I_SOM
-	g++ -Wall -Wunused -std=c++11 -O2 `pkg-config --cflags opencv` build/Node.o build/I-SOM.o build/Sample.o build/SOM.o build/Test.o build/DataSet.o build/PSOM.o src/click.cpp -o click `pkg-config --libs opencv`
-=======
 collect: codes/src/som_collect.cpp
 	make Node Sample SOM PSOM Test DataSet
 	g++ -Wall -Wunused -std=c++11 -O2 `pkg-config --cflags opencv` codes/src/som_collect.cpp -o som_collect `pkg-config --libs opencv`
@@ -76,7 +51,6 @@ train: codes/src/train.cpp
 color: codes/src/color_sensor.cpp
 	make Node Sample SOM PSOM Test DataSet
 	g++ -Wall -Wunused -std=c++11 -O2 `pkg-config --cflags opencv` codes/build/Node.o codes/build/Sample.o codes/build/SOM.o codes/build/Test.o codes/build/DataSet.o codes/build/PSOM.o codes/src/color_sensor.cpp -o color `pkg-config --libs opencv`
->>>>>>> master
 
 
 clean:
