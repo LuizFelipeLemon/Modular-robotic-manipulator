@@ -140,9 +140,10 @@ void ModularArm::sendMoveMulti(double _value[], int _joint[], int size) {
   msg += ";";
   // std::cerr << "Msg:" << msg << '\n';
   arduino.write(msg);
+
   while (!arduino.read(discart, 2))  // std::cerr << "Wainting\n";
     ;
-  std::cerr << "Sai movemulti\n";
+  // std::cerr << "Sai movemulti\n";
 }
 
 void ModularArm::sendHome() {
@@ -178,15 +179,7 @@ void ModularArm::jointT1FowardK(double rad, double mat[4][4]) {
   mat[0][2] = 0;
   mat[1][2] = 0;
   mat[2][2] = 1;
-  mat[3][2] = 0;def junta1(self, angulo):
-        comand = b'G1 A'
-        self.conexao.write(self.comand, self.angulo)
-
-    def junta2(self, angulo3):
-        self.conexao.write(self.comand, self.angulo)
-
-    def junta3(self, angulo3):
-        self.conexao.write(b'G1 C', self.angulo3)
+  mat[3][2] = 0;
   // Fourth Collum
   mat[0][3] = 0;
   mat[1][3] = 0;

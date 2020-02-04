@@ -3,7 +3,7 @@
 #include <fstream>
 #include <iostream>
 #include "ModularArm.h"
-//#include "Vision.h"
+#include "Vision.h"
 
 #define QTD_POINTS 10000
 
@@ -16,12 +16,12 @@ void normalize(double vector[4], double& norma) {
 
 int main() {
   ModularArm arm;
-  // Vision vision;
+  Vision vision;
 
   arm.start("/dev/ttyUSB0");
 
   // arm.sendMove(230, 0);
-  // vision.start();
+  vision.start();
 
   std::cerr << "vision startou\n";
   // Variaveis:
