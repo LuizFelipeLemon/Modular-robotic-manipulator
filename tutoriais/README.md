@@ -111,7 +111,7 @@ A documentação oficial para o processo de instalação pode ser encontrado nes
 
 ## Instalação do Gazebo
 
-Para proceder a instalação do Gazebo basta seguir a [documentação oficial](http://gazebosim.org/tutorials?tut=install_ubuntu&cat=install) e instalar com apenas a seguinte linha:
+Para proceder a instalação do Gazebo basta seguir a [documentação oficial](http://gazebosim.org/tutorials?tut=ros_installing&cat=connect_ros) e instalar com apenas a seguinte linha:
 ```bash
 curl -sSL http://get.gazebosim.org | sh
 ```
