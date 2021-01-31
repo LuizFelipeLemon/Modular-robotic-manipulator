@@ -73,7 +73,7 @@ você pode trocar entre ambas as distribuições utilizando os seguintes comando
 Por fim instalamos todas as dependências necessárias para utilizarmos Pacotes ROS:
 
 ```bash
-sudo apt install python3-rosdep python3-rosinstall python3-rosinstall-generator python3-wstool build-essential ros-noetic-ros-control ros-noetic-ros-controllers python3-catkin-tools ros-noetic-gazebo-ros-pkgs ros-noetic-gazebo-ros-control python3-osrf-pycommon
+sudo apt install python3-rosdep python3-rosinstall python3-rosinstall-generator python3-wstool build-essential ros-noetic-ros-control ros-noetic-ros-controllers python3-catkin-tools ros-noetic-gazebo-ros-pkgs ros-noetic-gazebo-ros-control python3-osrf-pycommon ros-noetic-moveit-ros-visualization ros-noetic-moveit-planners-ompl
 
 ```
 
